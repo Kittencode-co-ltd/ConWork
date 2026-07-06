@@ -311,6 +311,27 @@ if(formForgot) {
     });
 }
 
+// Skip Login (Guest Access)
+function skipLogin() {
+    const users = getUsers();
+    let guest = users.find(u => u.email === 'guest@conwork.local');
+    if (!guest) {
+        guest = {
+            user_id: 'U-GUEST',
+            name: 'Guest User',
+            email: 'guest@conwork.local',
+            password: '',
+            account_type: 'company',
+            role: 'worker',
+            company_id: 'C-1',
+            created_at: new Date().toISOString()
+        };
+        saveUser(guest);
+    }
+    currentUser = guest;
+    goToDashboard();
+}
+
 // Mock Google Login
 function loginWithGoogle() {
     const email = prompt("Simulating Google Login...\n\nEnter your Google Email:");
